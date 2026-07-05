@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Юля, поздравляю! 🎓</title>
 
-    <!-- Подключаем шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
 
     <style>
-        /* ----- ОБНУЛЕНИЕ И БАЗА ----- */
         * {
             margin: 0;
             padding: 0;
@@ -36,10 +34,8 @@
             padding: 48px 36px 32px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08), 0 10px 30px rgba(0, 0, 0, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.6);
-            transition: 0.3s ease;
         }
 
-        /* ----- ХЕДЕР С ЦВЕТОЧКАМИ ----- */
         .header {
             display: flex;
             align-items: center;
@@ -65,8 +61,7 @@
         }
 
         @keyframes float {
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0px) rotate(0deg);
             }
             50% {
@@ -79,7 +74,6 @@
             font-weight: 700;
             font-style: italic;
             font-size: 40px;
-            color: #2d1f14;
             letter-spacing: -0.01em;
             text-align: center;
             line-height: 1.2;
@@ -89,16 +83,10 @@
             background-clip: text;
         }
 
-        .title span {
-            display: inline-block;
-        }
-
-        /* ----- ВИДЕО ----- */
         .video-wrapper {
             position: relative;
             width: 100%;
             padding-bottom: 56.25%;
-            /* 16:9 */
             border-radius: 28px;
             overflow: hidden;
             margin-bottom: 36px;
@@ -116,7 +104,6 @@
             border: none;
         }
 
-        /* ----- QR-КОД ----- */
         .qr-section {
             display: flex;
             flex-direction: column;
@@ -159,7 +146,6 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* ----- ФУТЕР С ДАТОЙ ----- */
         .footer {
             display: flex;
             justify-content: center;
@@ -188,7 +174,7 @@
             font-weight: 700;
         }
 
-        /* ----- СТРАНИЦА ВХОДА (ЛОГИН) ----- */
+        /* СТРАНИЦА ВХОДА */
         .login-screen {
             display: flex;
             flex-direction: column;
@@ -292,7 +278,6 @@
             opacity: 1;
         }
 
-        /* ----- ОСНОВНОЙ КОНТЕНТ (скрыт по умолчанию) ----- */
         .main-content {
             display: none;
         }
@@ -313,7 +298,6 @@
             }
         }
 
-        /* ----- ЦВЕТОЧКИ НА СТРАНИЦЕ ВХОДА (для атмосферы) ----- */
         .login-flowers {
             display: flex;
             gap: 16px;
@@ -325,36 +309,29 @@
             animation: none;
         }
 
-        /* ----- АДАПТИВ ----- */
         @media (max-width: 600px) {
             .card {
                 padding: 28px 16px 24px;
                 border-radius: 32px;
             }
-
             .title {
                 font-size: 28px;
             }
-
             .flower {
                 font-size: 30px;
             }
-
             .header {
                 gap: 10px;
             }
-
             .qr-code {
                 width: 110px;
                 height: 110px;
                 padding: 10px;
             }
-
             .footer-year {
                 font-size: 15px;
                 padding: 4px 16px;
             }
-
             .login-title {
                 font-size: 26px;
             }
@@ -381,7 +358,7 @@
 
     <div class="card" id="app">
 
-        <!-- ===== СТРАНИЦА ВХОДА ===== -->
+        <!-- СТРАНИЦА ВХОДА -->
         <div class="login-screen" id="loginScreen">
             <div class="login-flowers">
                 <span class="flower-icon">🌸</span>
@@ -408,101 +385,88 @@
             </div>
         </div>
 
-        <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
+        <!-- ОСНОВНОЙ КОНТЕНТ -->
         <div class="main-content" id="mainContent">
 
-            <!-- ХЕДЕР: Цветочки + Заголовок -->
             <div class="header">
                 <span class="flower">🌸</span>
                 <h1 class="title">Юля, поздравляю!</h1>
                 <span class="flower">🌷</span>
             </div>
 
-            <!-- ВИДЕО (YouTube) -->
+            <!-- ВИДЕО ИЗ VK -->
             <div class="video-wrapper">
                 <iframe
-                src="https://www.youtube.com/embed/СЮДА_ВСТАВЬ_ИДЕНТИФИКАТОР_ВИДЕО"
-                title="Поздравление для Юли"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen>
-            </iframe>
-        </div>
-
-        <!-- QR-КОД -->
-        <div class="qr-section">
-            <div class="qr-code">
-                <img src="qr-code.png" alt="QR-код на этот сайт" />
+                    src="https://vkvideo.ru/video436463004_456240193"
+                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
             </div>
-            <span class="qr-label">📱 отсканируй — откроется сайт</span>
-        </div>
 
-        <!-- ФУТЕР: 2026 -->
-        <div class="footer">
-            <div class="footer-year"><span>✦</span> 2026 <span>✦</span></div>
+            <!-- QR-КОД -->
+            <div class="qr-section">
+                <div class="qr-code">
+                    <img src="qr-code.png" alt="QR-код на этот сайт" />
+                </div>
+                <span class="qr-label">📱 отсканируй — откроется сайт</span>
+            </div>
+
+            <div class="footer">
+                <div class="footer-year"><span>✦</span> 2026 <span>✦</span></div>
+            </div>
+
         </div>
 
     </div>
 
-</div>
+    <script>
+        (function() {
+            const passwordInput = document.getElementById('passwordInput');
+            const loginBtn = document.getElementById('loginBtn');
+            const loginError = document.getElementById('loginError');
+            const loginScreen = document.getElementById('loginScreen');
+            const mainContent = document.getElementById('mainContent');
 
-<script>
-    (function() {
-        const passwordInput = document.getElementById('passwordInput');
-        const loginBtn = document.getElementById('loginBtn');
-        const loginError = document.getElementById('loginError');
-        const loginScreen = document.getElementById('loginScreen');
-        const mainContent = document.getElementById('mainContent');
+            const CORRECT_PASSWORD = 'Юля';
 
-        const CORRECT_PASSWORD = 'Юля';
+            function tryLogin() {
+                const entered = passwordInput.value.trim();
 
-        function tryLogin() {
-            const entered = passwordInput.value.trim();
+                if (entered === CORRECT_PASSWORD) {
+                    loginScreen.style.display = 'none';
+                    mainContent.classList.add('active');
+                    loginError.classList.remove('show');
+                    sessionStorage.setItem('vogue_authenticated', 'true');
+                } else {
+                    loginError.classList.add('show');
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                    setTimeout(() => {
+                        loginError.classList.remove('show');
+                    }, 2500);
+                }
+            }
 
-            if (entered === CORRECT_PASSWORD) {
-                // Пароль верный — показываем контент
+            loginBtn.addEventListener('click', tryLogin);
+
+            passwordInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    tryLogin();
+                }
+            });
+
+            if (sessionStorage.getItem('vogue_authenticated') === 'true') {
                 loginScreen.style.display = 'none';
                 mainContent.classList.add('active');
+            }
 
-                // Убираем ошибку, если она была
-                loginError.classList.remove('show');
-
-                // Сохраняем в sessionStorage, чтобы не вводить заново при обновлении
-                sessionStorage.setItem('vogue_authenticated', 'true');
-            } else {
-                // Неверный пароль — показываем ошибку
-                loginError.classList.add('show');
-                passwordInput.value = '';
+            if (loginScreen.style.display !== 'none') {
                 passwordInput.focus();
-                setTimeout(() => {
-                    loginError.classList.remove('show');
-                }, 2500);
             }
-        }
-
-        // Кнопка "Войти"
-        loginBtn.addEventListener('click', tryLogin);
-
-        // Нажатие Enter в поле ввода
-        passwordInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                tryLogin();
-            }
-        });
-
-        // Проверяем sessionStorage при загрузке
-        if (sessionStorage.getItem('vogue_authenticated') === 'true') {
-            loginScreen.style.display = 'none';
-            mainContent.classList.add('active');
-        }
-
-        // Фокус на поле ввода при загрузке
-        if (loginScreen.style.display !== 'none') {
-            passwordInput.focus();
-        }
-    })();
-</script>
+        })();
+    </script>
 
 </body>
 </html>
