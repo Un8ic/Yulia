@@ -7,6 +7,10 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
 
+    <!-- Подключаем библиотеку для генерации QR-кода -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
+
     <style>
         * {
             margin: 0;
@@ -61,7 +65,8 @@
         }
 
         @keyframes float {
-            0%, 100% {
+            0%,
+            100% {
                 transform: translateY(0px) rotate(0deg);
             }
             50% {
@@ -117,10 +122,13 @@
             height: 140px;
             background: #ffffff;
             border-radius: 24px;
-            padding: 12px;
+            padding: 10px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
             border: 1px solid rgba(0, 0, 0, 0.04);
             transition: 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .qr-code:hover {
@@ -128,10 +136,12 @@
             box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10);
         }
 
+        .qr-code canvas,
         .qr-code img {
-            width: 100%;
-            height: 100%;
+            width: 100% !important;
+            height: 100% !important;
             display: block;
+            border-radius: 8px;
         }
 
         .qr-label {
@@ -326,7 +336,7 @@
             .qr-code {
                 width: 110px;
                 height: 110px;
-                padding: 10px;
+                padding: 8px;
             }
             .footer-year {
                 font-size: 15px;
@@ -373,13 +383,7 @@
                 Этот сайт создан специально для тебя
             </div>
             <div class="login-box">
-                <input
-                type="password"
-                class="login-input"
-                id="passwordInput"
-                placeholder="Введи пароль"
-                autofocus
-                />
+                <input type="password" class="login-input" id="passwordInput" placeholder="Введи пароль" autofocus />
                 <button class="login-btn" id="loginBtn">Войти 🌸</button>
                 <div class="login-error" id="loginError">❌ Неверный пароль, попробуй ещё раз</div>
             </div>
@@ -396,19 +400,13 @@
 
             <!-- ВИДЕО ИЗ VK -->
             <div class="video-wrapper">
-                <iframe
-                    src="https://vkvideo.ru/video436463004_456240193"
-                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-                    frameborder="0"
-                    allowfullscreen>
+                <iframe src="https://vkvideo.ru/video436463004_456240193" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen>
                 </iframe>
             </div>
 
-            <!-- QR-КОД -->
+            <!-- QR-КОД (ГЕНЕРИРУЕТСЯ АВТОМАТИЧЕСКИ) -->
             <div class="qr-section">
-                <div class="qr-code">
-                    <img src="qr-code.png" alt="QR-код на этот сайт" />
-                </div>
+                <div class="qr-code" id="qrcode"></div>
                 <span class="qr-label">📱 отсканируй — откроется сайт</span>
             </div>
 
@@ -421,6 +419,7 @@
     </div>
 
     <script>
+        // ----- ЛОГИКА ВХОДА -----
         (function() {
             const passwordInput = document.getElementById('passwordInput');
             const loginBtn = document.getElementById('loginBtn');
@@ -438,6 +437,8 @@
                     mainContent.classList.add('active');
                     loginError.classList.remove('show');
                     sessionStorage.setItem('vogue_authenticated', 'true');
+                    // Генерируем QR-код после входа
+                    generateQR();
                 } else {
                     loginError.classList.add('show');
                     passwordInput.value = '';
@@ -460,12 +461,39 @@
             if (sessionStorage.getItem('vogue_authenticated') === 'true') {
                 loginScreen.style.display = 'none';
                 mainContent.classList.add('active');
+                // Генерируем QR-код сразу, если уже авторизованы
+                setTimeout(generateQR, 100);
             }
 
             if (loginScreen.style.display !== 'none') {
                 passwordInput.focus();
             }
         })();
+
+        // ----- ГЕНЕРАЦИЯ QR-КОДА -----
+        function generateQR() {
+            const qrContainer = document.getElementById('qrcode');
+            // Очищаем контейнер, если там уже есть что-то
+            qrContainer.innerHTML = '';
+
+            // Берём текущий URL сайта
+            const url = window.location.href;
+
+            // Создаём QR-код
+            new QRCode(qrContainer, {
+                text: url,
+                width: 120,
+                height: 120,
+                colorDark: '#2d1f14',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H // Высокий уровень коррекции ошибок
+            });
+        }
+
+        // Если QR-код уже виден, генерируем его сразу
+        if (document.getElementById('mainContent').classList.contains('active')) {
+            setTimeout(generateQR, 100);
+        }
     </script>
 
 </body>
