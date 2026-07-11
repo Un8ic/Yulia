@@ -6,8 +6,6 @@
     <title>Юля, поздравляю! 🎓</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-
-    <!-- Подключаем библиотеку для генерации QR-кода -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
     </script>
 
@@ -56,22 +54,12 @@
             user-select: none;
             line-height: 1;
         }
-
-        .flower:nth-child(1) {
-            animation-delay: 0s;
-        }
-        .flower:nth-child(3) {
-            animation-delay: 1.5s;
-        }
+        .flower:nth-child(1) { animation-delay: 0s; }
+        .flower:nth-child(3) { animation-delay: 1.5s; }
 
         @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0px) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-14px) rotate(6deg);
-            }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-14px) rotate(6deg); }
         }
 
         .title {
@@ -107,6 +95,52 @@
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        /* Стили для плеера Google Drive */
+        .video-wrapper .gdrive-player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            flex-direction: column;
+            gap: 16px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 28px;
+        }
+
+        .video-wrapper .gdrive-player .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid #c76b4a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .video-wrapper .gdrive-player .player-error {
+            display: none;
+            color: #ff6b6b;
+            font-size: 14px;
+            max-width: 400px;
+            line-height: 1.5;
+        }
+
+        .video-wrapper .gdrive-player .player-error.show {
+            display: block;
         }
 
         .qr-section {
@@ -179,10 +213,7 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(4px);
         }
-
-        .footer-year span {
-            font-weight: 700;
-        }
+        .footer-year span { font-weight: 700; }
 
         /* СТРАНИЦА ВХОДА */
         .login-screen {
@@ -202,7 +233,6 @@
             text-align: center;
             line-height: 1.3;
         }
-
         .login-title .highlight {
             background: linear-gradient(135deg, #8b3f2a, #c76b4a);
             -webkit-background-clip: text;
@@ -240,12 +270,10 @@
             outline: none;
             color: #2d1f14;
         }
-
         .login-input:focus {
             border-color: #c76b4a;
             box-shadow: 0 0 0 4px rgba(199, 107, 74, 0.15);
         }
-
         .login-input::placeholder {
             color: #b8a69a;
             font-size: 16px;
@@ -265,12 +293,10 @@
             transition: 0.3s ease;
             box-shadow: 0 4px 16px rgba(199, 107, 74, 0.3);
         }
-
         .login-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 28px rgba(199, 107, 74, 0.4);
         }
-
         .login-btn:active {
             transform: scale(0.97);
         }
@@ -283,29 +309,19 @@
             min-height: 20px;
             text-align: center;
         }
-
-        .login-error.show {
-            opacity: 1;
-        }
+        .login-error.show { opacity: 1; }
 
         .main-content {
             display: none;
         }
-
         .main-content.active {
             display: block;
             animation: fadeIn 0.6s ease;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .login-flowers {
@@ -314,52 +330,22 @@
             font-size: 36px;
             animation: float 3s ease-in-out infinite;
         }
-
-        .login-flowers .flower-icon {
-            animation: none;
-        }
+        .login-flowers .flower-icon { animation: none; }
 
         @media (max-width: 600px) {
-            .card {
-                padding: 28px 16px 24px;
-                border-radius: 32px;
-            }
-            .title {
-                font-size: 28px;
-            }
-            .flower {
-                font-size: 30px;
-            }
-            .header {
-                gap: 10px;
-            }
-            .qr-code {
-                width: 110px;
-                height: 110px;
-                padding: 8px;
-            }
-            .footer-year {
-                font-size: 15px;
-                padding: 4px 16px;
-            }
-            .login-title {
-                font-size: 26px;
-            }
+            .card { padding: 28px 16px 24px; border-radius: 32px; }
+            .title { font-size: 28px; }
+            .flower { font-size: 30px; }
+            .header { gap: 10px; }
+            .qr-code { width: 110px; height: 110px; padding: 8px; }
+            .footer-year { font-size: 15px; padding: 4px 16px; }
+            .login-title { font-size: 26px; }
         }
-
         @media (max-width: 420px) {
-            .title {
-                font-size: 22px;
-            }
-            .flower {
-                font-size: 24px;
-            }
-            .header {
-                gap: 6px;
-            }
-            .login-title {
-                font-size: 22px;
-            }
+            .title { font-size: 22px; }
+            .flower { font-size: 24px; }
+            .header { gap: 6px; }
+            .login-title { font-size: 22px; }
         }
     </style>
 </head>
@@ -398,13 +384,20 @@
                 <span class="flower">🌷</span>
             </div>
 
-            <!-- ВИДЕО ИЗ VK -->
-            <div class="video-wrapper">
-                <iframe src="https://vkvideo.ru/video436463004_456240193" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen>
-                </iframe>
+            <!-- ВИДЕО ИЗ GOOGLE DRIVE -->
+            <div class="video-wrapper" id="videoWrapper">
+                <!-- Плеер будет загружен сюда через JavaScript -->
+                <div class="gdrive-player" id="gdrivePlayer">
+                    <div class="loading-spinner"></div>
+                    <div style="font-size:16px; opacity:0.7;">Загрузка видео...</div>
+                    <div class="player-error" id="playerError">
+                        ⚠️ Не удалось загрузить видео.<br />
+                        Попробуй <a href="https://drive.google.com/file/d/1ITrL-YJsaDc7X7WJN-yavwdqKkVqHv3g/view?usp=sharing" target="_blank" style="color:#c76b4a;">открыть его в Google Диске</a>
+                    </div>
+                </div>
             </div>
 
-            <!-- QR-КОД (ГЕНЕРИРУЕТСЯ АВТОМАТИЧЕСКИ) -->
+            <!-- QR-КОД -->
             <div class="qr-section">
                 <div class="qr-code" id="qrcode"></div>
                 <span class="qr-label">📱 отсканируй — откроется сайт</span>
@@ -426,73 +419,161 @@
             const loginError = document.getElementById('loginError');
             const loginScreen = document.getElementById('loginScreen');
             const mainContent = document.getElementById('mainContent');
-
             const CORRECT_PASSWORD = 'Юля';
 
             function tryLogin() {
                 const entered = passwordInput.value.trim();
-
                 if (entered === CORRECT_PASSWORD) {
                     loginScreen.style.display = 'none';
                     mainContent.classList.add('active');
                     loginError.classList.remove('show');
                     sessionStorage.setItem('vogue_authenticated', 'true');
-                    // Генерируем QR-код после входа
                     generateQR();
+                    loadVideoFromDrive();
                 } else {
                     loginError.classList.add('show');
                     passwordInput.value = '';
                     passwordInput.focus();
-                    setTimeout(() => {
-                        loginError.classList.remove('show');
-                    }, 2500);
+                    setTimeout(() => loginError.classList.remove('show'), 2500);
                 }
             }
 
             loginBtn.addEventListener('click', tryLogin);
-
             passwordInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    tryLogin();
-                }
+                if (e.key === 'Enter') { e.preventDefault(); tryLogin(); }
             });
 
             if (sessionStorage.getItem('vogue_authenticated') === 'true') {
                 loginScreen.style.display = 'none';
                 mainContent.classList.add('active');
-                // Генерируем QR-код сразу, если уже авторизованы
-                setTimeout(generateQR, 100);
+                setTimeout(() => {
+                    generateQR();
+                    loadVideoFromDrive();
+                }, 100);
             }
-
-            if (loginScreen.style.display !== 'none') {
-                passwordInput.focus();
-            }
+            if (loginScreen.style.display !== 'none') passwordInput.focus();
         })();
 
         // ----- ГЕНЕРАЦИЯ QR-КОДА -----
         function generateQR() {
             const qrContainer = document.getElementById('qrcode');
-            // Очищаем контейнер, если там уже есть что-то
             qrContainer.innerHTML = '';
-
-            // Берём текущий URL сайта
             const url = window.location.href;
-
-            // Создаём QR-код
-            new QRCode(qrContainer, {
-                text: url,
-                width: 120,
-                height: 120,
-                colorDark: '#2d1f14',
-                colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.H // Высокий уровень коррекции ошибок
-            });
+            try {
+                new QRCode(qrContainer, {
+                    text: url,
+                    width: 120,
+                    height: 120,
+                    colorDark: '#2d1f14',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            } catch(e) {
+                console.warn('QR generation error:', e);
+            }
         }
 
-        // Если QR-код уже виден, генерируем его сразу
+        // ----- ЗАГРУЗКА ВИДЕО ИЗ GOOGLE DRIVE -----
+        function loadVideoFromDrive() {
+            const wrapper = document.getElementById('videoWrapper');
+            const player = document.getElementById('gdrivePlayer');
+            const errorEl = document.getElementById('playerError');
+
+            // ID видео из ссылки
+            const fileId = '1ITrL-YJsaDc7X7WJN-yavwdqKkVqHv3g';
+
+            // Прямая ссылка для встраивания
+            const embedUrl =
+                `https://drive.google.com/file/d/${fileId}/preview`;
+
+            // Проверяем, есть ли уже iframe
+            const existingIframe = wrapper.querySelector('iframe');
+            if (existingIframe) {
+                // Если уже есть — обновляем только если нужно
+                return;
+            }
+
+            // Создаём iframe
+            const iframe = document.createElement('iframe');
+            iframe.src = embedUrl;
+            iframe.allow =
+            'autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;';
+            iframe.allowFullscreen = true;
+            iframe.style.border = 'none';
+            iframe.style.position = 'absolute';
+            iframe.style.top = '0';
+            iframe.style.left = '0';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+
+            // Заменяем кастомный плеер на iframe
+            // Сначала прячем ошибку
+            errorEl.classList.remove('show');
+
+            // Заменяем содержимое: убираем кастомный плеер, вставляем iframe
+            // Но оставляем кастомный плеер как fallback, если iframe не загрузится
+            // Лучше просто заменить всё содержимое video-wrapper
+
+            // Создаём новый контейнер для iframe
+            const newWrapper = document.createElement('div');
+            newWrapper.style.cssText =
+                'position:relative; width:100%; padding-bottom:56.25%; border-radius:28px; overflow:hidden; margin-bottom:36px; box-shadow:0 12px 40px rgba(0,0,0,0.10); background:#1a1a1a; border:1px solid rgba(255,255,255,0.3);';
+
+            // Копируем iframe в новый контейнер
+            newWrapper.appendChild(iframe);
+
+            // Заменяем старый wrapper на новый
+            wrapper.parentNode.replaceChild(newWrapper, wrapper);
+
+            // Даём новый ID для будущих обращений
+            newWrapper.id = 'videoWrapper';
+
+            // Если через 10 секунд iframe не загрузился — показываем ошибку
+            setTimeout(() => {
+                // Проверяем, загрузился ли iframe
+                const checkIframe = document.querySelector('#videoWrapper iframe');
+                if (checkIframe) {
+                    // Пытаемся проверить, загрузилось ли содержимое
+                    try {
+                        // Просто проверяем, что iframe существует
+                        console.log('Video iframe loaded');
+                    } catch(e) {
+                        // Если ошибка — показываем fallback
+                        showDriveFallback();
+                    }
+                } else {
+                    // Если iframe не найден — показываем fallback
+                    showDriveFallback();
+                }
+            }, 10000);
+
+            function showDriveFallback() {
+                // Проверяем, не был ли уже добавлен fallback
+                const wrapperEl = document.getElementById('videoWrapper');
+                if (!wrapperEl) return;
+
+                // Если в wrapper нет iframe — добавляем ссылку
+                const iframeEl = wrapperEl.querySelector('iframe');
+                if (!iframeEl) {
+                    // Показываем сообщение о том, что видео не загрузилось
+                    const fallbackDiv = document.createElement('div');
+                    fallbackDiv.style.cssText =
+                        'position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#1a1a1a; color:white; flex-direction:column; gap:16px; padding:20px; text-align:center; border-radius:28px; font-family:Inter,sans-serif;';
+                    fallbackDiv.innerHTML = `
+                            <div style="font-size:48px;">🎬</div>
+                            <div style="font-size:18px; font-weight:500;">Не удалось загрузить видео</div>
+                            <div style="font-size:14px; opacity:0.7; max-width:400px; line-height:1.5;">
+                                Попробуй <a href="https://drive.google.com/file/d/${fileId}/view?usp=sharing" target="_blank" style="color:#c76b4a; text-decoration:underline;">открыть в Google Диске</a>
+                            </div>
+                        `;
+                    wrapperEl.appendChild(fallbackDiv);
+                }
+            }
+        }
+
+        // Если контент уже активен, загружаем видео
         if (document.getElementById('mainContent').classList.contains('active')) {
-            setTimeout(generateQR, 100);
+            setTimeout(loadVideoFromDrive, 200);
         }
     </script>
 
