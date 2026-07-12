@@ -10,6 +10,7 @@
     </script>
 
     <style>
+        /* ----- ОБЩИЕ СТИЛИ (без изменений) ----- */
         * {
             margin: 0;
             padding: 0;
@@ -76,7 +77,8 @@
             background-clip: text;
         }
 
-        .video-wrapper {
+        /* ----- НОВЫЙ БЛОК ДЛЯ ВИДЕО (КНОПКА) ----- */
+        .video-button-wrapper {
             position: relative;
             width: 100%;
             padding-bottom: 56.25%;
@@ -86,17 +88,62 @@
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10);
             background: #0d0d0d;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
 
-        .video-wrapper iframe {
+        .video-button-wrapper:active {
+            transform: scale(0.98);
+        }
+
+        .video-button {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #0d0d0d;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            gap: 16px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
         }
 
+        .video-button .icon {
+            font-size: 64px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .video-button .main-text {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .video-button .sub-text {
+            font-size: 14px;
+            opacity: 0.6;
+            max-width: 300px;
+            line-height: 1.4;
+        }
+
+        .video-button .arrow {
+            font-size: 24px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        /* СТИЛИ ДЛЯ QR-КОДА И ФУТЕРА (без изменений) */
         .qr-section {
             display: flex;
             flex-direction: column;
@@ -164,7 +211,7 @@
         }
         .footer-year span { font-weight: 700; }
 
-        /* СТРАНИЦА ВХОДА */
+        /* СТРАНИЦА ВХОДА (без изменений) */
         .login-screen {
             display: flex;
             flex-direction: column;
@@ -299,9 +346,15 @@
                 gap: 8px;
                 margin-bottom: 20px;
             }
-            .video-wrapper {
+            .video-button-wrapper {
                 border-radius: 18px;
                 margin-bottom: 20px;
+            }
+            .video-button .icon {
+                font-size: 48px;
+            }
+            .video-button .main-text {
+                font-size: 18px;
             }
             .qr-code {
                 width: 110px;
@@ -342,6 +395,12 @@
             .header {
                 gap: 6px;
                 margin-bottom: 16px;
+            }
+            .video-button .icon {
+                font-size: 38px;
+            }
+            .video-button .main-text {
+                font-size: 16px;
             }
             .qr-code {
                 width: 90px;
@@ -389,12 +448,17 @@
                 <span class="flower">🌷</span>
             </div>
 
-            <!-- ВИДЕО ИЗ GOOGLE DRIVE (ПРАВИЛЬНАЯ ССЫЛКА!) -->
-            <div class="video-wrapper">
-                <iframe src="https://drive.google.com/file/d/13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e/preview" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen>
-                </iframe>
-            </div>
+            <!-- ВИДЕО-КНОПКА (ОТКРЫВАЕТСЯ В НОВОЙ ВКЛАДКЕ) -->
+            <a href="https://drive.google.com/file/d/13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e/view?usp=drivesdk" target="_blank" class="video-button-wrapper">
+                <div class="video-button">
+                    <div class="icon">▶️</div>
+                    <div class="main-text">Нажми, чтобы посмотреть видео</div>
+                    <div class="sub-text">Откроется в новой вкладке Google Диска</div>
+                    <div class="arrow">⬇️</div>
+                </div>
+            </a>
 
+            <!-- QR-КОД -->
             <div class="qr-section">
                 <div class="qr-code" id="qrcode"></div>
                 <span class="qr-label">📱 отсканируй — откроется сайт</span>
