@@ -421,7 +421,7 @@
             const loginError = document.getElementById('loginError');
             const loginScreen = document.getElementById('loginScreen');
             const mainContent = document.getElementById('mainContent');
-            const CORRECT_PASSWORD = '319';  // ← ПАРОЛЬ ИЗМЕНЁН
+            const CORRECT_PASSWORD = '319';
 
             function tryLogin() {
                 const entered = passwordInput.value.trim();
@@ -488,13 +488,13 @@
                 fallback.style.display = 'flex';
             });
 
-            // Таймер: если через 6 секунд видео не начало загружаться — показываем fallback
+            // Таймер: если через 10 секунд видео не начало загружаться — показываем fallback
             setTimeout(() => {
                 if (video.readyState === 0) {
                     video.style.display = 'none';
                     fallback.style.display = 'flex';
                 }
-            }, 6000);
+            }, 10000);
 
             // Пробуем загрузить видео
             video.load();
