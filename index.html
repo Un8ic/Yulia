@@ -134,55 +134,6 @@
             opacity: 0.7;
         }
 
-        .video-fallback {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #0d0d0d;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            padding: 30px;
-            text-align: center;
-            gap: 16px;
-            z-index: 3;
-        }
-
-        .video-fallback .icon { font-size: 48px; }
-        .video-fallback .title-fallback { font-size: 18px; font-weight: 500; }
-        .video-fallback .desc {
-            font-size: 14px;
-            opacity: 0.7;
-            max-width: 400px;
-            line-height: 1.5;
-        }
-        .video-fallback .btn {
-            display: inline-block;
-            padding: 12px 32px;
-            background: linear-gradient(135deg, #8b3f2a, #c76b4a);
-            color: white;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-            transition: 0.3s ease;
-            margin-top: 8px;
-        }
-        .video-fallback .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(199, 107, 74, 0.4);
-        }
-        .video-fallback .link {
-            color: #c76b4a;
-            font-size: 14px;
-            text-decoration: underline;
-        }
-
         .qr-section {
             display: flex;
             flex-direction: column;
@@ -423,27 +374,16 @@
                 <span class="flower">🌷</span>
             </div>
 
-            <!-- ВИДЕО С ДВУМЯ ИСТОЧНИКАМИ -->
-            <div class="video-wrapper" id="videoWrapper">
+            <!-- ВИДЕО ИЗ GOOGLE DRIVE -->
+            <div class="video-wrapper">
                 <div class="video-placeholder" id="videoPlaceholder">
                     <div class="spinner"></div>
                     <div class="status-text">Загрузка видео...</div>
                 </div>
-
                 <video id="videoPlayer" controls playsinline preload="metadata" style="display:none;">
-                    <source id="videoSource" src="" type="video/mp4" />
-                    Твой браузер не поддерживает видео :(
+                    <source src="https://drive.google.com/uc?export=download&id=13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e" type="video/mp4" />
+                    <p>Твой браузер не поддерживает видео :(</p>
                 </video>
-
-                <div class="video-fallback" id="videoFallback">
-                    <div class="icon">🎬</div>
-                    <div class="title-fallback">Не удалось загрузить видео</div>
-                    <div class="desc">
-                        Видео можно посмотреть по прямой ссылке или скачать на устройство
-                    </div>
-                    <a href="https://drive.google.com/uc?export=download&id=13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e" target="_blank" class="btn">📥 Скачать видео</a>
-                    <a href="https://drive.google.com/file/d/13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e/view?usp=drivesdk" target="_blank" class="link">Открыть в Google Диске</a>
-                </div>
             </div>
 
             <div class="qr-section">
@@ -477,7 +417,7 @@
                     loginError.classList.remove('show');
                     sessionStorage.setItem('vogue_authenticated', 'true');
                     generateQR();
-                    initVideoWithFallback();
+                    initVideo();
                 } else {
                     loginError.classList.add('show');
                     passwordInput.value = '';
@@ -496,7 +436,7 @@
                 mainContent.classList.add('active');
                 setTimeout(() => {
                     generateQR();
-                    initVideoWithFallback();
+                    initVideo();
                 }, 100);
             }
             if (loginScreen.style.display !== 'none') passwordInput.focus();
@@ -521,97 +461,72 @@
             }
         }
 
-        // ============================================================
-        // ГЛАВНАЯ ЛОГИКА ЗАГРУЗКИ ВИДЕО (2 ИСТОЧНИКА)
-        // ============================================================
-        function initVideoWithFallback() {
+        // ----- ИНИЦИАЛИЗАЦИЯ ВИДЕО -----
+        function initVideo() {
             const video = document.getElementById('videoPlayer');
-            const source = document.getElementById('videoSource');
             const placeholder = document.getElementById('videoPlaceholder');
-            const fallback = document.getElementById('videoFallback');
 
-            // СПИСОК ИСТОЧНИКОВ (прямые ссылки на файлы)
-            const sources = [
-                {
-                    name: 'Google Drive (основной)',
-                    // Прямая ссылка на скачивание (через export=download)
-                    url: 'https://drive.google.com/uc?export=download&id=13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e'
-                },
-                {
-                    name: 'Яндекс.Диск (резерв)',
-                    url: 'https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/i/nz4ALLNMGv4Mqw'
-                }
-            ];
+            if (!video) return;
 
-            let currentSourceIndex = 0;
-            let loadTimeout = null;
-            let isVideoLoaded = false;
-
-            function tryLoadSource(index) {
-                if (index >= sources.length) {
-                    showFallback('Все источники видео недоступны');
-                    return;
-                }
-
-                const src = sources[index];
-                console.log(`Пробуем загрузить: ${src.name} (${index + 1}/${sources.length})`);
-
-                const statusText = placeholder.querySelector('.status-text');
-                if (statusText) {
-                    statusText.textContent = `Загрузка из ${src.name}...`;
-                }
-
-                source.src = src.url;
-                video.load();
-
-                if (loadTimeout) clearTimeout(loadTimeout);
-
-                loadTimeout = setTimeout(() => {
-                    if (!isVideoLoaded) {
-                        console.log(`Таймаут: ${src.name} не загрузился, пробуем следующий`);
-                        tryLoadSource(index + 1);
-                    }
-                }, 6000);
-
-                video.onloadeddata = function() {
-                    if (!isVideoLoaded) {
-                        isVideoLoaded = true;
-                        clearTimeout(loadTimeout);
-                        console.log(`✅ Видео загружено из ${src.name}`);
-                        video.style.display = 'block';
-                        placeholder.style.display = 'none';
-                        fallback.style.display = 'none';
-                    }
-                };
-
-                video.onerror = function() {
-                    if (!isVideoLoaded) {
-                        console.log(`❌ Ошибка загрузки из ${src.name}`);
-                        clearTimeout(loadTimeout);
-                        tryLoadSource(index + 1);
-                    }
-                };
-            }
-
-            function showFallback(reason) {
-                console.log(`❌ Fallback: ${reason}`);
-                clearTimeout(loadTimeout);
-                video.style.display = 'none';
+            // Когда видео начинает загружаться — скрываем плейсхолдер
+            video.addEventListener('loadstart', function() {
+                video.style.display = 'block';
                 placeholder.style.display = 'none';
-                fallback.style.display = 'flex';
+            });
+
+            // Если видео загрузилось и готово к воспроизведению
+            video.addEventListener('canplay', function() {
+                video.style.display = 'block';
+                placeholder.style.display = 'none';
+            });
+
+            // Если видео уже загружено (быстрый кеш)
+            if (video.readyState >= 2) {
+                video.style.display = 'block';
+                placeholder.style.display = 'none';
             }
 
-            tryLoadSource(0);
+            // Пробуем загрузить видео
+            video.load();
 
+            // Таймер: если через 10 секунд видео не начало загружаться —
+            // пробуем перезагрузить его через другую ссылку
             setTimeout(() => {
-                if (!isVideoLoaded) {
-                    showFallback('Превышено время ожидания');
+                if (video.readyState === 0) {
+                    console.log('Пробуем альтернативный способ загрузки...');
+                    // Меняем источник на альтернативный URL
+                    const source = video.querySelector('source');
+                    source.src =
+                    'https://drive.google.com/uc?export=download&confirm=t&id=13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e';
+                    video.load();
+
+                    // Если и это не сработало через 5 секунд — показываем ссылку
+                    setTimeout(() => {
+                        if (video.readyState === 0) {
+                            placeholder.innerHTML = `
+                                    <div style="font-size:48px;">🎬</div>
+                                    <div style="font-size:18px; font-weight:500;">Видео не загружается :(</div>
+                                    <div style="font-size:14px; opacity:0.7; max-width:400px; line-height:1.5;">
+                                        Попробуй открыть видео напрямую в Google Диске
+                                    </div>
+                                    <a href="https://drive.google.com/file/d/13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e/view?usp=drivesdk" target="_blank" style="display:inline-block; padding:12px 32px; background:linear-gradient(135deg,#8b3f2a,#c76b4a); color:white; border-radius:40px; text-decoration:none; font-weight:500; margin-top:8px;">
+                                        📹 Открыть в Google Диске
+                                    </a>
+                                    <a href="https://drive.google.com/uc?export=download&id=13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e" target="_blank" style="color:#c76b4a; font-size:14px; text-decoration:underline;">
+                                        📥 Скачать видео
+                                    </a>
+                                `;
+                            // Убираем спиннер, показываем контент
+                            placeholder.style.display = 'flex';
+                            video.style.display = 'none';
+                        }
+                    }, 5000);
                 }
-            }, 15000);
+            }, 10000);
         }
 
         if (document.getElementById('mainContent').classList.contains('active')) {
-            setTimeout(initVideoWithFallback, 200);
+            setTimeout(initVideo, 200);
         }
     </script>
 
