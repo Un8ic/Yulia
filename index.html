@@ -84,63 +84,69 @@
             overflow: hidden;
             margin-bottom: 36px;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10);
-            background: #0000000d;
+            background: #0d0d0d;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .video-wrapper iframe {
+        .video-wrapper video {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: contain;
+            background: #0d0d0d;
         }
 
-        /* Стили для плеера Google Drive */
-        .video-wrapper .gdrive-player {
+        .video-fallback {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: #1a1a1a;
+            background: #0d0d0d;
             color: white;
             font-family: 'Inter', sans-serif;
-            flex-direction: column;
-            gap: 16px;
-            padding: 20px;
+            padding: 30px;
             text-align: center;
-            border-radius: 28px;
+            gap: 16px;
         }
 
-        .video-wrapper .gdrive-player .loading-spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(255,255,255,0.1);
-            border-top: 4px solid #c76b4a;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .video-fallback .icon {
+            font-size: 48px;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .video-fallback .title-fallback {
+            font-size: 18px;
+            font-weight: 500;
         }
-
-        .video-wrapper .gdrive-player .player-error {
-            display: none;
-            color: #ff6b6b;
+        .video-fallback .desc {
             font-size: 14px;
+            opacity: 0.7;
             max-width: 400px;
             line-height: 1.5;
         }
-
-        .video-wrapper .gdrive-player .player-error.show {
-            display: block;
+        .video-fallback .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #8b3f2a, #c76b4a);
+            color: white;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: 0.3s ease;
+            margin-top: 8px;
+        }
+        .video-fallback .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(199, 107, 74, 0.4);
         }
 
         .qr-section {
@@ -386,14 +392,18 @@
 
             <!-- ВИДЕО ИЗ GOOGLE DRIVE -->
             <div class="video-wrapper" id="videoWrapper">
-                <!-- Плеер будет загружен сюда через JavaScript -->
-                <div class="gdrive-player" id="gdrivePlayer">
-                    <div class="loading-spinner"></div>
-                    <div style="font-size:16px; opacity:0.7;">Загрузка видео...</div>
-                    <div class="player-error" id="playerError">
-                        ⚠️ Не удалось загрузить видео.<br />
-                        Попробуй <a href="https://drive.google.com/file/d/1ITrL-YJsaDc7X7WJN-yavwdqKkVqHv3g/view?usp=sharing" target="_blank" style="color:#c76b4a;">открыть его в Google Диске</a>
+                <video id="videoPlayer" controls playsinline preload="metadata">
+                    <source src="https://drive.google.com/uc?export=download&id=1ITrL-YJsaDc7X7WJN-yavwdqKkVqHv3g" type="video/mp4" />
+                    Твой браузер не поддерживает видео :(
+                </video>
+                <div class="video-fallback" id="videoFallback" style="display:none;">
+                    <div class="icon">🎬</div>
+                    <div class="title-fallback">Не удалось загрузить видео</div>
+                    <div class="desc">
+                        Видео можно посмотреть по прямой ссылке или скачать на устройство
                     </div>
+                    <a href="https://drive.google.com/uc?export=download&id=1ITrL-YJsaDc7X7WJN-yavwdqKkVqHv3g" target="_blank" class="btn">📥 Скачать видео</a>
+                    <a href="https://drive.google.com/file/d/1ITrL-YJsaDc7X7WJN-yavwdqKkVqHv3g/view?usp=sharing" target="_blank" style="color:#c76b4a; font-size:14px; text-decoration:underline;">Открыть в Google Диске</a>
                 </div>
             </div>
 
@@ -419,7 +429,7 @@
             const loginError = document.getElementById('loginError');
             const loginScreen = document.getElementById('loginScreen');
             const mainContent = document.getElementById('mainContent');
-            const CORRECT_PASSWORD = '319';
+            const CORRECT_PASSWORD = 'Юля';
 
             function tryLogin() {
                 const entered = passwordInput.value.trim();
@@ -429,7 +439,7 @@
                     loginError.classList.remove('show');
                     sessionStorage.setItem('vogue_authenticated', 'true');
                     generateQR();
-                    loadVideoFromDrive();
+                    initVideo();
                 } else {
                     loginError.classList.add('show');
                     passwordInput.value = '';
@@ -448,7 +458,7 @@
                 mainContent.classList.add('active');
                 setTimeout(() => {
                     generateQR();
-                    loadVideoFromDrive();
+                    initVideo();
                 }, 100);
             }
             if (loginScreen.style.display !== 'none') passwordInput.focus();
@@ -473,107 +483,35 @@
             }
         }
 
-        // ----- ЗАГРУЗКА ВИДЕО ИЗ GOOGLE DRIVE -----
-        function loadVideoFromDrive() {
-            const wrapper = document.getElementById('videoWrapper');
-            const player = document.getElementById('gdrivePlayer');
-            const errorEl = document.getElementById('playerError');
+        // ----- ИНИЦИАЛИЗАЦИЯ ВИДЕО -----
+        function initVideo() {
+            const video = document.getElementById('videoPlayer');
+            const fallback = document.getElementById('videoFallback');
 
-            // ID видео из ссылки
-            const fileId = '1ITrL-YJsaDc7X7WJN-yavwdqKkVqHv3g';
+            if (!video) return;
 
-            // Прямая ссылка для встраивания
-            const embedUrl =
-                `https://drive.google.com/file/d/${fileId}/preview`;
+            // Проверяем, загрузилось ли видео
+            video.addEventListener('error', function() {
+                // Видео не загрузилось — показываем fallback
+                video.style.display = 'none';
+                fallback.style.display = 'flex';
+            });
 
-            // Проверяем, есть ли уже iframe
-            const existingIframe = wrapper.querySelector('iframe');
-            if (existingIframe) {
-                // Если уже есть — обновляем только если нужно
-                return;
-            }
-
-            // Создаём iframe
-            const iframe = document.createElement('iframe');
-            iframe.src = embedUrl;
-            iframe.allow =
-            'autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;';
-            iframe.allowFullscreen = true;
-            iframe.style.border = 'none';
-            iframe.style.position = 'absolute';
-            iframe.style.top = '0';
-            iframe.style.left = '0';
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-
-            // Заменяем кастомный плеер на iframe
-            // Сначала прячем ошибку
-            errorEl.classList.remove('show');
-
-            // Заменяем содержимое: убираем кастомный плеер, вставляем iframe
-            // Но оставляем кастомный плеер как fallback, если iframe не загрузится
-            // Лучше просто заменить всё содержимое video-wrapper
-
-            // Создаём новый контейнер для iframe
-            const newWrapper = document.createElement('div');
-            newWrapper.style.cssText =
-                'position:relative; width:100%; padding-bottom:56.25%; border-radius:28px; overflow:hidden; margin-bottom:36px; box-shadow:0 12px 40px rgba(0,0,0,0.10); background:#1a1a1a; border:1px solid rgba(255,255,255,0.3);';
-
-            // Копируем iframe в новый контейнер
-            newWrapper.appendChild(iframe);
-
-            // Заменяем старый wrapper на новый
-            wrapper.parentNode.replaceChild(newWrapper, wrapper);
-
-            // Даём новый ID для будущих обращений
-            newWrapper.id = 'videoWrapper';
-
-            // Если через 10 секунд iframe не загрузился — показываем ошибку
+            // Если видео не начинает загружаться через 5 секунд — тоже показываем fallback
             setTimeout(() => {
-                // Проверяем, загрузился ли iframe
-                const checkIframe = document.querySelector('#videoWrapper iframe');
-                if (checkIframe) {
-                    // Пытаемся проверить, загрузилось ли содержимое
-                    try {
-                        // Просто проверяем, что iframe существует
-                        console.log('Video iframe loaded');
-                    } catch(e) {
-                        // Если ошибка — показываем fallback
-                        showDriveFallback();
-                    }
-                } else {
-                    // Если iframe не найден — показываем fallback
-                    showDriveFallback();
+                if (video.readyState === 0) {
+                    video.style.display = 'none';
+                    fallback.style.display = 'flex';
                 }
-            }, 10000);
+            }, 5000);
 
-            function showDriveFallback() {
-                // Проверяем, не был ли уже добавлен fallback
-                const wrapperEl = document.getElementById('videoWrapper');
-                if (!wrapperEl) return;
-
-                // Если в wrapper нет iframe — добавляем ссылку
-                const iframeEl = wrapperEl.querySelector('iframe');
-                if (!iframeEl) {
-                    // Показываем сообщение о том, что видео не загрузилось
-                    const fallbackDiv = document.createElement('div');
-                    fallbackDiv.style.cssText =
-                        'position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#1a1a1a; color:white; flex-direction:column; gap:16px; padding:20px; text-align:center; border-radius:28px; font-family:Inter,sans-serif;';
-                    fallbackDiv.innerHTML = `
-                            <div style="font-size:48px;">🎬</div>
-                            <div style="font-size:18px; font-weight:500;">Не удалось загрузить видео</div>
-                            <div style="font-size:14px; opacity:0.7; max-width:400px; line-height:1.5;">
-                                Попробуй <a href="https://drive.google.com/file/d/${fileId}/view?usp=sharing" target="_blank" style="color:#c76b4a; text-decoration:underline;">открыть в Google Диске</a>
-                            </div>
-                        `;
-                    wrapperEl.appendChild(fallbackDiv);
-                }
-            }
+            // Пробуем загрузить видео
+            video.load();
         }
 
-        // Если контент уже активен, загружаем видео
+        // Если контент уже активен, инициализируем видео
         if (document.getElementById('mainContent').classList.contains('active')) {
-            setTimeout(loadVideoFromDrive, 200);
+            setTimeout(initVideo, 200);
         }
     </script>
 
