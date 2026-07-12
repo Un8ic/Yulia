@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Юля, поздравляю! 🎓</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
@@ -23,7 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 30px 20px;
+            padding: 16px 12px;
         }
 
         .card {
@@ -32,8 +32,8 @@
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-radius: 56px;
-            padding: 48px 36px 32px;
+            border-radius: 40px;
+            padding: 32px 20px 24px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08), 0 10px 30px rgba(0, 0, 0, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.6);
         }
@@ -42,13 +42,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 36px;
+            gap: 12px;
+            margin-bottom: 28px;
             flex-wrap: wrap;
         }
 
         .flower {
-            font-size: 42px;
+            font-size: 34px;
             display: inline-block;
             animation: float 3s ease-in-out infinite;
             user-select: none;
@@ -59,14 +59,14 @@
 
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-14px) rotate(6deg); }
+            50% { transform: translateY(-10px) rotate(6deg); }
         }
 
         .title {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             font-style: italic;
-            font-size: 40px;
+            font-size: 32px;
             letter-spacing: -0.01em;
             text-align: center;
             line-height: 1.2;
@@ -80,73 +80,36 @@
             position: relative;
             width: 100%;
             padding-bottom: 56.25%;
-            border-radius: 28px;
+            border-radius: 24px;
             overflow: hidden;
-            margin-bottom: 36px;
+            margin-bottom: 28px;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10);
             background: #0d0d0d;
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .video-wrapper video {
+        .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            background: #0d0d0d;
-        }
-
-        .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #0d0d0d;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            gap: 16px;
-            z-index: 2;
-        }
-
-        .video-placeholder .spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid rgba(255,255,255,0.1);
-            border-top: 4px solid #c76b4a;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .video-placeholder .status-text {
-            font-size: 16px;
-            opacity: 0.7;
+            border: none;
         }
 
         .qr-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            margin: 16px 0 28px;
+            gap: 10px;
+            margin: 12px 0 20px;
         }
 
         .qr-code {
-            width: 140px;
-            height: 140px;
+            width: 130px;
+            height: 130px;
             background: #ffffff;
-            border-radius: 24px;
+            border-radius: 20px;
             padding: 10px;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
             border: 1px solid rgba(0, 0, 0, 0.04);
@@ -154,11 +117,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .qr-code:hover {
-            transform: scale(1.03);
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10);
         }
 
         .qr-code canvas,
@@ -170,12 +128,12 @@
         }
 
         .qr-label {
-            font-size: 14px;
+            font-size: 13px;
             color: #7a6a5e;
             font-weight: 400;
             letter-spacing: 0.02em;
             background: rgba(255, 255, 255, 0.5);
-            padding: 6px 18px;
+            padding: 4px 16px;
             border-radius: 40px;
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -186,39 +144,40 @@
             justify-content: center;
             align-items: center;
             gap: 12px;
-            padding-top: 18px;
+            padding-top: 16px;
             border-top: 1px solid rgba(0, 0, 0, 0.04);
-            margin-top: 6px;
+            margin-top: 4px;
             flex-wrap: wrap;
         }
 
         .footer-year {
             font-family: 'Playfair Display', serif;
             font-weight: 400;
-            font-size: 18px;
+            font-size: 16px;
             color: #b8a69a;
             letter-spacing: 0.04em;
             background: rgba(255, 255, 255, 0.4);
-            padding: 6px 22px;
+            padding: 4px 18px;
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(4px);
         }
         .footer-year span { font-weight: 700; }
 
+        /* СТРАНИЦА ВХОДА */
         .login-screen {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 28px;
-            padding: 20px 10px;
+            gap: 20px;
+            padding: 10px 10px;
         }
 
         .login-title {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
             font-style: italic;
-            font-size: 32px;
+            font-size: 28px;
             color: #2d1f14;
             text-align: center;
             line-height: 1.3;
@@ -231,7 +190,7 @@
         }
 
         .login-subtitle {
-            font-size: 16px;
+            font-size: 15px;
             color: #7a6a5e;
             text-align: center;
             opacity: 0.8;
@@ -241,9 +200,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             width: 100%;
-            max-width: 340px;
+            max-width: 320px;
         }
 
         .login-input {
@@ -259,6 +218,7 @@
             text-align: center;
             outline: none;
             color: #2d1f14;
+            -webkit-appearance: none;
         }
         .login-input:focus {
             border-color: #c76b4a;
@@ -282,6 +242,7 @@
             cursor: pointer;
             transition: 0.3s ease;
             box-shadow: 0 4px 16px rgba(199, 107, 74, 0.3);
+            -webkit-tap-highlight-color: transparent;
         }
         .login-btn:hover {
             transform: translateY(-2px);
@@ -316,26 +277,80 @@
 
         .login-flowers {
             display: flex;
-            gap: 16px;
-            font-size: 36px;
+            gap: 14px;
+            font-size: 30px;
             animation: float 3s ease-in-out infinite;
         }
         .login-flowers .flower-icon { animation: none; }
 
+        /* МОБИЛЬНАЯ АДАПТАЦИЯ */
         @media (max-width: 600px) {
-            .card { padding: 28px 16px 24px; border-radius: 32px; }
-            .title { font-size: 28px; }
-            .flower { font-size: 30px; }
-            .header { gap: 10px; }
-            .qr-code { width: 110px; height: 110px; padding: 8px; }
-            .footer-year { font-size: 15px; padding: 4px 16px; }
-            .login-title { font-size: 26px; }
+            .card {
+                padding: 20px 14px 18px;
+                border-radius: 32px;
+            }
+            .title {
+                font-size: 26px;
+            }
+            .flower {
+                font-size: 26px;
+            }
+            .header {
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+            .video-wrapper {
+                border-radius: 18px;
+                margin-bottom: 20px;
+            }
+            .qr-code {
+                width: 110px;
+                height: 110px;
+                padding: 8px;
+            }
+            .footer-year {
+                font-size: 14px;
+                padding: 4px 14px;
+            }
+            .login-title {
+                font-size: 24px;
+            }
+            .login-input {
+                font-size: 16px;
+                padding: 14px 18px;
+            }
+            .login-btn {
+                font-size: 16px;
+                padding: 14px 18px;
+            }
+            .login-screen {
+                gap: 16px;
+            }
         }
-        @media (max-width: 420px) {
-            .title { font-size: 22px; }
-            .flower { font-size: 24px; }
-            .header { gap: 6px; }
-            .login-title { font-size: 22px; }
+
+        @media (max-width: 400px) {
+            .card {
+                padding: 16px 10px 14px;
+                border-radius: 24px;
+            }
+            .title {
+                font-size: 20px;
+            }
+            .flower {
+                font-size: 20px;
+            }
+            .header {
+                gap: 6px;
+                margin-bottom: 16px;
+            }
+            .qr-code {
+                width: 90px;
+                height: 90px;
+                padding: 6px;
+            }
+            .login-title {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
@@ -374,16 +389,10 @@
                 <span class="flower">🌷</span>
             </div>
 
-            <!-- ВИДЕО ИЗ GOOGLE DRIVE -->
+            <!-- ВИДЕО ИЗ GOOGLE DRIVE (ПРАВИЛЬНАЯ ССЫЛКА!) -->
             <div class="video-wrapper">
-                <div class="video-placeholder" id="videoPlaceholder">
-                    <div class="spinner"></div>
-                    <div class="status-text">Загрузка видео...</div>
-                </div>
-                <video id="videoPlayer" controls playsinline preload="metadata" style="display:none;">
-                    <source src="https://drive.google.com/uc?export=download&id=13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e" type="video/mp4" />
-                    <p>Твой браузер не поддерживает видео :(</p>
-                </video>
+                <iframe src="https://drive.google.com/file/d/13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e/preview" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen>
+                </iframe>
             </div>
 
             <div class="qr-section">
@@ -417,7 +426,6 @@
                     loginError.classList.remove('show');
                     sessionStorage.setItem('vogue_authenticated', 'true');
                     generateQR();
-                    initVideo();
                 } else {
                     loginError.classList.add('show');
                     passwordInput.value = '';
@@ -428,16 +436,14 @@
 
             loginBtn.addEventListener('click', tryLogin);
             passwordInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') { e.preventDefault(); tryLogin(); }
+                if (e.key === 'Enter') { e.preventDefault();
+                    tryLogin(); }
             });
 
             if (sessionStorage.getItem('vogue_authenticated') === 'true') {
                 loginScreen.style.display = 'none';
                 mainContent.classList.add('active');
-                setTimeout(() => {
-                    generateQR();
-                    initVideo();
-                }, 100);
+                setTimeout(generateQR, 100);
             }
             if (loginScreen.style.display !== 'none') passwordInput.focus();
         })();
@@ -459,74 +465,6 @@
             } catch(e) {
                 console.warn('QR generation error:', e);
             }
-        }
-
-        // ----- ИНИЦИАЛИЗАЦИЯ ВИДЕО -----
-        function initVideo() {
-            const video = document.getElementById('videoPlayer');
-            const placeholder = document.getElementById('videoPlaceholder');
-
-            if (!video) return;
-
-            // Когда видео начинает загружаться — скрываем плейсхолдер
-            video.addEventListener('loadstart', function() {
-                video.style.display = 'block';
-                placeholder.style.display = 'none';
-            });
-
-            // Если видео загрузилось и готово к воспроизведению
-            video.addEventListener('canplay', function() {
-                video.style.display = 'block';
-                placeholder.style.display = 'none';
-            });
-
-            // Если видео уже загружено (быстрый кеш)
-            if (video.readyState >= 2) {
-                video.style.display = 'block';
-                placeholder.style.display = 'none';
-            }
-
-            // Пробуем загрузить видео
-            video.load();
-
-            // Таймер: если через 10 секунд видео не начало загружаться —
-            // пробуем перезагрузить его через другую ссылку
-            setTimeout(() => {
-                if (video.readyState === 0) {
-                    console.log('Пробуем альтернативный способ загрузки...');
-                    // Меняем источник на альтернативный URL
-                    const source = video.querySelector('source');
-                    source.src =
-                    'https://drive.google.com/uc?export=download&confirm=t&id=13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e';
-                    video.load();
-
-                    // Если и это не сработало через 5 секунд — показываем ссылку
-                    setTimeout(() => {
-                        if (video.readyState === 0) {
-                            placeholder.innerHTML = `
-                                    <div style="font-size:48px;">🎬</div>
-                                    <div style="font-size:18px; font-weight:500;">Видео не загружается :(</div>
-                                    <div style="font-size:14px; opacity:0.7; max-width:400px; line-height:1.5;">
-                                        Попробуй открыть видео напрямую в Google Диске
-                                    </div>
-                                    <a href="https://drive.google.com/file/d/13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e/view?usp=drivesdk" target="_blank" style="display:inline-block; padding:12px 32px; background:linear-gradient(135deg,#8b3f2a,#c76b4a); color:white; border-radius:40px; text-decoration:none; font-weight:500; margin-top:8px;">
-                                        📹 Открыть в Google Диске
-                                    </a>
-                                    <a href="https://drive.google.com/uc?export=download&id=13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e" target="_blank" style="color:#c76b4a; font-size:14px; text-decoration:underline;">
-                                        📥 Скачать видео
-                                    </a>
-                                `;
-                            // Убираем спиннер, показываем контент
-                            placeholder.style.display = 'flex';
-                            video.style.display = 'none';
-                        }
-                    }, 10000);
-                }
-            }, 10000);
-        }
-
-        if (document.getElementById('mainContent').classList.contains('active')) {
-            setTimeout(initVideo, 200);
         }
     </script>
 
