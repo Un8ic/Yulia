@@ -98,7 +98,6 @@
             background: #0d0d0d;
         }
 
-        /* СТИЛИ ДЛЯ ПЛЕЙСХОЛДЕРА ЗАГРУЗКИ */
         .video-placeholder {
             position: absolute;
             top: 0;
@@ -135,7 +134,6 @@
             opacity: 0.7;
         }
 
-        /* СТИЛИ ДЛЯ FALLBACK (КОГДА ВСЁ НЕ РАБОТАЕТ) */
         .video-fallback {
             position: absolute;
             top: 0;
@@ -178,6 +176,11 @@
         .video-fallback .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 28px rgba(199, 107, 74, 0.4);
+        }
+        .video-fallback .link {
+            color: #c76b4a;
+            font-size: 14px;
+            text-decoration: underline;
         }
 
         .qr-section {
@@ -252,7 +255,6 @@
         }
         .footer-year span { font-weight: 700; }
 
-        /* СТРАНИЦА ВХОДА */
         .login-screen {
             display: flex;
             flex-direction: column;
@@ -421,33 +423,29 @@
                 <span class="flower">🌷</span>
             </div>
 
-            <!-- ВИДЕО С ТРЁМЯ ИСТОЧНИКАМИ -->
+            <!-- ВИДЕО С ДВУМЯ ИСТОЧНИКАМИ -->
             <div class="video-wrapper" id="videoWrapper">
-                <!-- Плейсхолдер загрузки -->
                 <div class="video-placeholder" id="videoPlaceholder">
                     <div class="spinner"></div>
                     <div class="status-text">Загрузка видео...</div>
                 </div>
 
-                <!-- Видеоплеер (источники будут подставлены через JS) -->
                 <video id="videoPlayer" controls playsinline preload="metadata" style="display:none;">
                     <source id="videoSource" src="" type="video/mp4" />
                     Твой браузер не поддерживает видео :(
                 </video>
 
-                <!-- Фолбэк (когда всё не работает) -->
                 <div class="video-fallback" id="videoFallback">
                     <div class="icon">🎬</div>
                     <div class="title-fallback">Не удалось загрузить видео</div>
                     <div class="desc">
                         Видео можно посмотреть по прямой ссылке или скачать на устройство
                     </div>
-                    <a href="https://drive.google.com/uc?export=download&id=1ITrL-YJsaDc7X7WJN-yavwdqKkVqHv3g" target="_blank" class="btn">📥 Скачать видео</a>
-                    <a href="https://drive.google.com/file/d/1ITrL-YJsaDc7X7WJN-yavwdqKkVqHv3g/view?usp=sharing" target="_blank" style="color:#c76b4a; font-size:14px; text-decoration:underline;">Открыть в Google Диске</a>
+                    <a href="https://drive.google.com/uc?export=download&id=13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e" target="_blank" class="btn">📥 Скачать видео</a>
+                    <a href="https://drive.google.com/file/d/13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e/view?usp=drivesdk" target="_blank" class="link">Открыть в Google Диске</a>
                 </div>
             </div>
 
-            <!-- QR-КОД -->
             <div class="qr-section">
                 <div class="qr-code" id="qrcode"></div>
                 <span class="qr-label">📱 отсканируй — откроется сайт</span>
@@ -524,7 +522,7 @@
         }
 
         // ============================================================
-        // ГЛАВНАЯ ЛОГИКА ЗАГРУЗКИ ВИДЕО (3 ИСТОЧНИКА)
+        // ГЛАВНАЯ ЛОГИКА ЗАГРУЗКИ ВИДЕО (2 ИСТОЧНИКА)
         // ============================================================
         function initVideoWithFallback() {
             const video = document.getElementById('videoPlayer');
@@ -532,15 +530,16 @@
             const placeholder = document.getElementById('videoPlaceholder');
             const fallback = document.getElementById('videoFallback');
 
-            // Список источников (прямые ссылки на скачивание)
+            // СПИСОК ИСТОЧНИКОВ (прямые ссылки на файлы)
             const sources = [
                 {
-                    name: 'Яндекс.Диск',
-                    url: 'https://getfile.dokpub.com/yandex/get/https://https://disk.yandex.ru/i/nz4ALLNMGv4Mqw'
+                    name: 'Google Drive (основной)',
+                    // Прямая ссылка на скачивание (через export=download)
+                    url: 'https://drive.google.com/uc?export=download&id=13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e'
                 },
                 {
-                    name: 'Google Drive',
-                    url: 'https://vk.com/away.php?to=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F13H2IvVxNzyAf8LVtWldT6-Xflt1Rry_e%2Fview%3Fusp%3Ddrivesdk&utf=1'
+                    name: 'Яндекс.Диск (резерв)',
+                    url: 'https://getfile.dokpub.com/yandex/get/https://disk.yandex.ru/i/nz4ALLNMGv4Mqw'
                 }
             ];
 
@@ -548,10 +547,8 @@
             let loadTimeout = null;
             let isVideoLoaded = false;
 
-            // Функция для попытки загрузки источника
             function tryLoadSource(index) {
                 if (index >= sources.length) {
-                    // Все источники перепробованы — показываем fallback
                     showFallback('Все источники видео недоступны');
                     return;
                 }
@@ -559,20 +556,16 @@
                 const src = sources[index];
                 console.log(`Пробуем загрузить: ${src.name} (${index + 1}/${sources.length})`);
 
-                // Обновляем статус в плейсхолдере
                 const statusText = placeholder.querySelector('.status-text');
                 if (statusText) {
                     statusText.textContent = `Загрузка из ${src.name}...`;
                 }
 
-                // Устанавливаем источник
                 source.src = src.url;
                 video.load();
 
-                // Сбрасываем таймаут
                 if (loadTimeout) clearTimeout(loadTimeout);
 
-                // Таймаут: если через 6 секунд видео не загрузилось — пробуем следующий источник
                 loadTimeout = setTimeout(() => {
                     if (!isVideoLoaded) {
                         console.log(`Таймаут: ${src.name} не загрузился, пробуем следующий`);
@@ -580,31 +573,26 @@
                     }
                 }, 6000);
 
-                // Обработчик успешной загрузки
                 video.onloadeddata = function() {
                     if (!isVideoLoaded) {
                         isVideoLoaded = true;
                         clearTimeout(loadTimeout);
                         console.log(`✅ Видео загружено из ${src.name}`);
-                        // Показываем видео и скрываем плейсхолдер
                         video.style.display = 'block';
                         placeholder.style.display = 'none';
                         fallback.style.display = 'none';
                     }
                 };
 
-                // Обработчик ошибки
                 video.onerror = function() {
                     if (!isVideoLoaded) {
                         console.log(`❌ Ошибка загрузки из ${src.name}`);
                         clearTimeout(loadTimeout);
-                        // Пробуем следующий источник
                         tryLoadSource(index + 1);
                     }
                 };
             }
 
-            // Функция для показа полного фолбэка
             function showFallback(reason) {
                 console.log(`❌ Fallback: ${reason}`);
                 clearTimeout(loadTimeout);
@@ -613,10 +601,8 @@
                 fallback.style.display = 'flex';
             }
 
-            // Стартуем с первого источника
             tryLoadSource(0);
 
-            // Дополнительная защита: если через 15 секунд видео не загрузилось — показываем fallback
             setTimeout(() => {
                 if (!isVideoLoaded) {
                     showFallback('Превышено время ожидания');
@@ -624,7 +610,6 @@
             }, 15000);
         }
 
-        // Если контент уже активен, инициализируем видео
         if (document.getElementById('mainContent').classList.contains('active')) {
             setTimeout(initVideoWithFallback, 200);
         }
